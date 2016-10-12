@@ -23,7 +23,7 @@ namespace ObligT1.Controllers
             {
                 return RedirectToAction("LoggInn");
             }
-            else
+            else 
             {
                 return View();
             }
