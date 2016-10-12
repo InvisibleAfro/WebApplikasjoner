@@ -14,18 +14,24 @@ namespace ObligT1.Controllers
     {
         private DataConn db = new DataConn();
 
-        // GET: Kundes
-        public ActionResult Valider()
+        [HttpPost]
+        public ActionResult Valider(KundeModell innKunde)
         {
-            DbFunskjoner df = new DbFunskjoner();
-            bool sjekk = df.ValiderBruker();
-            if (!sjekk)
+            if(ModelState.IsValid){
+                DbFunskjoner df = new DbFunskjoner();
+                bool sjekk = df.ValiderBruker();
+                if (innKunde.PersonNr == "13")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("LoggInn");
+                }
+            }
+            else
             {
                 return RedirectToAction("LoggInn");
-            }
-            else 
-            {
-                return View();
             }
         }
         public ActionResult Index()

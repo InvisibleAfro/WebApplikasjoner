@@ -19,8 +19,8 @@ namespace ObligT1
                 try
                 {
                     var nyKunde = new Kunde();
-                    nyKunde.Fornavn = innKunde.Fornavn;
-                    nyKunde.Etternavn = innKunde.Etternavn;
+                    //nyKunde.Fornavn = innKunde.Fornavn;
+                    //nyKunde.Etternavn = innKunde.Etternavn;
                     nyKunde.PersonNr = innKunde.PersonNr;
                     nyKunde.Passord = innKunde.Passord;
                     db.Kunder.Add(nyKunde);
