@@ -12,7 +12,7 @@ namespace ObligT1.Models
     {
         [DisplayName("Person nummer")]
         [Required(ErrorMessage = "Personnr må oppgis")]
-        [RegularExpression(@"[0-9]{11}", ErrorMessage = "Ugyldig person nummer.")]
+        //[RegularExpression(@"[0-9]{11}", ErrorMessage = "Ugyldig person nummer.")]
         public string PersonNr { get; set; }
         //public string Fornavn { get; set; }
         //public string Etternavn { get; set; }
