@@ -24,6 +24,7 @@ namespace ObligT1.Controllers
                 {
                     return View();
                 }
+                // dette er en bæsj
                 else
                 {
                     return RedirectToAction("LoggInn");
