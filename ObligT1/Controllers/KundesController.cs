@@ -20,8 +20,18 @@ namespace ObligT1.Controllers
             if (ModelState.IsValid)
             {
                 var Hash = System.Security.Cryptography.SHA512.Create();
-                byte[] innPassord = System.Text.Encoding.ASCII.GetBytes(innKunde.Passord);                
-                return View();               
+                byte [] innPassord = System.Text.Encoding.ASCII.GetBytes(innKunde.Passord);
+                byte [] utPassord = Hash.ComputeHash(innPassord);
+                DbFunskjoner df = new DbFunskjoner();
+                innKunde.PassordHash = utPassord;
+                if (!df.ValiderBruker(innKunde))
+                {
+                    return RedirectToAction("LoggInn");
+                }
+                else
+                {
+                    return View();
+                }              
             }
             else
             {

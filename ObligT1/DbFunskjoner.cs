@@ -8,9 +8,30 @@ namespace ObligT1
 {
     public class DbFunskjoner
     {
-        public bool ValiderBruker()
+        public bool ValiderBruker(KundeModell inn)
         {
-            return false;
+            using (var db = new DataConn())
+            {
+                try
+                {
+                    string passord = from k in db.Kunder
+                                  where k.PersonNr == inn.PersonNr
+                                  select k;
+
+                    if(passord == null)
+                    {
+                        return false;
+                    }
+                    else if(System.Text.Encoding.ASCII.GetBytes(passord) == inn.PassordHash)
+                    {
+                        return true;
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
+            }
         }
         public bool lagreKunde(KundeModell innKunde)
         {
@@ -22,7 +43,7 @@ namespace ObligT1
                     //nyKunde.Fornavn = innKunde.Fornavn;
                     //nyKunde.Etternavn = innKunde.Etternavn;
                     nyKunde.PersonNr = innKunde.PersonNr;
-                    nyKunde.Passord = innKunde.Passord;
+                    //nyKunde.Passord = innKunde.Passord;
                     db.Kunder.Add(nyKunde);
                     db.SaveChanges();
                     return true;
