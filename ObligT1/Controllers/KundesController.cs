@@ -17,18 +17,9 @@ namespace ObligT1.Controllers
         [HttpPost]
         public ActionResult Valider(KundeModell innKunde)
         {
-            if(ModelState.IsValid){
-                DbFunskjoner df = new DbFunskjoner();
-                bool sjekk = df.ValiderBruker();
-                if (innKunde.PersonNr == "13")
-                {
-                    return View();
-                }
-                // hei!!!!!!!!!!!!
-                else
-                {
-                    return RedirectToAction("LoggInn");
-                }
+            if (ModelState.IsValid)
+            {                
+                    return View();               
             }
             else
             {
