@@ -13,7 +13,7 @@ namespace ObligT1.Models
             public string PersonNr { get; set; }
             public string Fornavn { get; set; }
             public string Etternavn { get; set; }
-            public string Passord { get; set; }
+            public string PassordHash { get; set; }
         }
         public class Konto
         {

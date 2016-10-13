@@ -18,8 +18,10 @@ namespace ObligT1.Controllers
         public ActionResult Valider(KundeModell innKunde)
         {
             if (ModelState.IsValid)
-            {                
-                    return View();               
+            {
+                var Hash = System.Security.Cryptography.SHA512.Create();
+                byte[] innPassord = System.Text.Encoding.ASCII.GetBytes(innKunde.Passord);                
+                return View();               
             }
             else
             {
