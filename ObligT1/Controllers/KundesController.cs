@@ -43,6 +43,9 @@ namespace ObligT1.Controllers
                 DbFunskjoner df = new DbFunskjoner();
                 if (!df.ValiderBruker(innKunde))
                 {
+                    ViewBag.Forsøk = "Feil brukernavn eller passord.";
+                    ViewData["Forsøk"] = true;
+                    Session["Forsøk"] = true;
                     return RedirectToAction("LoggInn");
                 }
                 else
@@ -61,6 +64,11 @@ namespace ObligT1.Controllers
         }
         public ActionResult LoggInn()
         {
+            if (Session["InnLogget"] == null)
+            {
+                Session["InnLogget"] = false;
+                ViewBag.Innlogget = (bool)Session["InnLogget"];
+            }
             return View();
         }
 
