@@ -114,6 +114,10 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -156,6 +160,8 @@
     <Content Include="Views\Kundes\Index.cshtml" />
     <Content Include="Views\Kundes\LoggInn.cshtml" />
     <Content Include="Views\Kundes\Valider.cshtml" />
+    <Content Include="Views\Kundes\LagBruker.cshtml" />
+    <Content Include="Views\Kundes\DetteFunker.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

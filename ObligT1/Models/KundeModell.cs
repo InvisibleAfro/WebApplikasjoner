@@ -18,7 +18,6 @@ namespace ObligT1.Models
         //public string Etternavn { get; set; }
         [DisplayName("Passord")]
         [Required(ErrorMessage ="Passord må oppgis.")]
-        public string PassordInn { get; set; }
-        public byte[] PassordHash;
+        public string Passord { get; set; }
     }
 }

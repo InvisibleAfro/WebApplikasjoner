@@ -13,7 +13,7 @@ namespace ObligT1.Models
             public string PersonNr { get; set; }
             public string Fornavn { get; set; }
             public string Etternavn { get; set; }
-            public string PassordHash { get; set; }
+            public byte [] PassordHash { get; set; }
         }
         public class Konto
         {
@@ -34,9 +34,18 @@ namespace ObligT1.Models
         }
     public class DataConn : DbContext
     {
+        public DataConn()
+            : base("name=Database")
+        {
+            //Database.SetInitializer(new DropCreateDatabaseAlways<DataConn>());
+            Database.CreateIfNotExists();
+        }
         public DbSet<Konto> Kontoer { get; set; }
         public DbSet<Kunde> Kunder { get; set; }
         public DbSet<Transaksjon> Transaksjoner { get; set; }
-
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+        }
     }
 }

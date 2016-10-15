@@ -3,27 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ObligT1.Models;
+using System.Diagnostics;
 
 namespace ObligT1
 {
     public class DbFunskjoner
     {
-        public bool ValiderBruker(KundeModell inn)
+        public bool ValiderBruker(KundeModell inn) // kalles etter innloggingsforsøk.
         {
             using (var db = new DataConn())
             {
                 try
                 {
-                    string passord = from k in db.Kunder
-                                  where k.PersonNr == inn.PersonNr
-                                  select k;
-
-                    if(passord == null)
+                    byte[] innHash = returnerHash(inn.Passord);
+                    Kunde funnetKunde = db.Kunder.FirstOrDefault(k => k.PassordHash == innHash && k.PersonNr == inn.PersonNr);
+                    if(funnetKunde == null)
                     {
+                        Debug.WriteLine("ValiderBruker = Null");
                         return false;
                     }
-                    else if(System.Text.Encoding.ASCII.GetBytes(passord) == inn.PassordHash)
+                    else
                     {
+                        Debug.WriteLine("ValiderBruker = true");
                         return true;
                     }
                 }
@@ -32,6 +33,31 @@ namespace ObligT1
                     return false;
                 }
             }
+        }
+        public static bool LagBruker (KundeModell innKunde)
+        {
+            using (var db = new DataConn())
+            {
+                try
+                {
+                    Kunde nyKunde = new Kunde();
+                    nyKunde.PersonNr = innKunde.PersonNr;
+                    nyKunde.PassordHash = returnerHash(innKunde.Passord);
+                    db.Kunder.Add(nyKunde);
+                    db.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+        public static byte [] returnerHash (string innPassord)
+        {
+            var algoritme = System.Security.Cryptography.SHA256.Create();
+            byte[] utData = System.Text.Encoding.ASCII.GetBytes(innPassord);
+            return algoritme.ComputeHash(utData);
         }
         public bool lagreKunde(KundeModell innKunde)
         {

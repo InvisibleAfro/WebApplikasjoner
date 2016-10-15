@@ -1,13 +1,16 @@
 ﻿@model ObligT1.Models.KundeModell
+
 @{
-    ViewBag.Title = "LoggInn";
+    ViewBag.Title = "LagBruker";
 }
 
-<h2>Logg Inn</h2>
-@using (Html.BeginForm("Valider", "Kundes"))
+<h2>Registrer ny kunde</h2>
+
+
+@using (Html.BeginForm("LagBruker", "Kundes")) 
 {
     @Html.AntiForgeryToken()
-
+    
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -26,8 +29,15 @@
                 @Html.ValidationMessageFor(model => model.Passord, "", new { @class = "text-danger" })
             </div>
         </div>
-        <input type="submit" value="Login" class="btn btn-default" />
-        <input type="button" value="Login" class="btn btn-default" disabled="disabled"/>
-        </div>  
-        @Html.ActionLink("Lag ny bruker", "LagBruker");
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
 }
+
+<div>
+    @Html.ActionLink("Back", "Index")
+</div>

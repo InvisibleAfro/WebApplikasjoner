@@ -7,23 +7,40 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ObligT1.Models;
+using System.Diagnostics;
 
 namespace ObligT1.Controllers
 {
     public class KundesController : Controller
     {
         private DataConn db = new DataConn();
+        public ActionResult LagBruker()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult LagBruker(KundeModell innKunde)
+        {
+            if (DbFunskjoner.LagBruker(innKunde))
+            {
+                return RedirectToAction("DetteFunker");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        public ActionResult DetteFunker()
+        {
+            return View();
+        }
 
         [HttpPost]
         public ActionResult Valider(KundeModell innKunde)
         {
             if (ModelState.IsValid)
             {
-                var Hash = System.Security.Cryptography.SHA512.Create();
-                byte [] innPassord = System.Text.Encoding.ASCII.GetBytes(innKunde.Passord);
-                byte [] utPassord = Hash.ComputeHash(innPassord);
                 DbFunskjoner df = new DbFunskjoner();
-                innKunde.PassordHash = utPassord;
                 if (!df.ValiderBruker(innKunde))
                 {
                     return RedirectToAction("LoggInn");
