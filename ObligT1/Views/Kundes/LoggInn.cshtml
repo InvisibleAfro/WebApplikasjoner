@@ -25,9 +25,9 @@
                 @Html.EditorFor(model => model.Passord, new { htmlAttributes = new { @class = "form-control" } })
                 <div class="col-md-10">
                         @Html.ValidationMessageFor(model => model.Passord, "", new { @class = "text-danger" })
-                        @if (Session["Forsøk"] != null)
+                        @if (Session["Innlogget"] != null)
                         {
-                            <p style="color:red:">Feil brukernavn eller passord.</p>
+                            <p style="color:red">Feil brukernavn eller passord.</p>
                         }
                         </div>
                 </div>

@@ -143,6 +143,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\dbContext.cs" />
+    <Compile Include="Models\DomeModell.cs" />
     <Compile Include="Models\KundeModell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -162,6 +163,7 @@
     <Content Include="Views\Kundes\Valider.cshtml" />
     <Content Include="Views\Kundes\LagBruker.cshtml" />
     <Content Include="Views\Kundes\DetteFunker.cshtml" />
+    <Content Include="Views\Kundes\IndexBruker.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

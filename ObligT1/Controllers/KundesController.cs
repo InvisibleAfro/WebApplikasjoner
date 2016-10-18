@@ -43,14 +43,14 @@ namespace ObligT1.Controllers
                 DbFunskjoner df = new DbFunskjoner();
                 if (!df.ValiderBruker(innKunde))
                 {
-                    ViewBag.Forsøk = "Feil brukernavn eller passord.";
-                    ViewData["Forsøk"] = true;
-                    Session["Forsøk"] = true;
+                    Session["Innlogget"] = false;
                     return RedirectToAction("LoggInn");
                 }
                 else
                 {
-                    return View();
+                    //Session("Innlogget") = true;
+                    HttpContext.Session.Add("Innlogget", true);
+                    return RedirectToAction("IndexBruker");
                 }              
             }
             else
@@ -58,17 +58,17 @@ namespace ObligT1.Controllers
                 return RedirectToAction("LoggInn");
             }
         }
-        public ActionResult Index()
+        public ActionResult IndexBruker()
         {
-            return View(db.Kunder.ToList());
+            if (HttpContext.Session["InnLogget"] != null)
+            {
+                ViewBag.Innlogget = (bool)Session["InnLogget"];
+                return View();
+            }
+            return RedirectToAction("LoggInn");
         }
         public ActionResult LoggInn()
         {
-            if (Session["InnLogget"] == null)
-            {
-                Session["InnLogget"] = false;
-                ViewBag.Innlogget = (bool)Session["InnLogget"];
-            }
             return View();
         }
 

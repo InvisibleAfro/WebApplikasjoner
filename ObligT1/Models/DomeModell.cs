@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
+
 namespace ObligT1.Models
 {
-    /*public class KundeModell
+    public class KundeModell
     {
         [DisplayName("Person nummer")]
         [Required(ErrorMessage = "Personnr må oppgis")]
@@ -16,7 +16,12 @@ namespace ObligT1.Models
         //public string Fornavn { get; set; }
         //public string Etternavn { get; set; }
         [DisplayName("Passord")]
-        [Required(ErrorMessage ="Passord må oppgis.")]
+        [Required(ErrorMessage = "Passord må oppgis.")]
         public string Passord { get; set; }
-    }*/
+    }
+    public class KontoListe
+    {
+        public string KontoNr;
+        public decimal Saldo;
+    }
 }

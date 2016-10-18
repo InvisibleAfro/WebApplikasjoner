@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "IndexBruker";
+}
+<head>
+    <script type="text/javascript">
+        $(function () {
+            //Ajax som lager json av KontoNr og Beløp
+            $.ajax({
+                url: '/Kunde/hentAlleNavn',
+                type: 'GET',
+                dataType: 'json',
+                success: function (jsKunde) {
+                    VisDropDown(jsKunde);
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+            function VisKonoter(jsKontoNrOgBeløp) {
+                utStreng = "<table>";
+                for (var løpeNr in jsKontoNrOgBeløp) {
+                    utStreng += "<tr><td>" + jsKontoNrOgBeløp[løpeNr] + "</tr><td>" + jsKontoNrOgBeløp[løpeNr] + "</td></tr>";
+                }
+                utStreng += "</table>";
+                $("VisKonoter").append(utStreng);
+            }
+        });
+    </script>
+</head>
+<h2>Velkommen til din netbank.</h2>
+<div id="VisKontoer"></div>
