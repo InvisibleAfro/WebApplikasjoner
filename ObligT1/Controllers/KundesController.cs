@@ -53,6 +53,7 @@ namespace ObligT1.Controllers
                     return RedirectToAction("IndexBruker");
                 }              
             }
+            // http://www.binaryintellect.net/articles/218ca630-ba50-48fe-af6e-6f754b5894aa.aspx
             else
             {
                 return RedirectToAction("LoggInn");
