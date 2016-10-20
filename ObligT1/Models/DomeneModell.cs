@@ -30,6 +30,10 @@ namespace ObligT1.Models
         [Required(ErrorMessage = "Passord må oppgis.")]
         public string Passord { get; set; }
     }
+    public class BrukerIndex
+    {
+        public string personNr;
+    }
     public class KontoListe
     {
         public string KontoNr;

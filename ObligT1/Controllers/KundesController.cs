@@ -31,22 +31,14 @@ namespace ObligT1.Controllers
                 return View();
             }
         }
-        public ActionResult DetteFunker()
-        {
-            return View();
-        }
-        [HttpGet]
-        public string HentKontoNr(string personNr)
+        public string HentKontoNr()
         {
             using (var db = new DataConn())
             {
-                Debug.WriteLine("HentKontoNr Kalt. PersonNr er " + personNr);
-                Debug.WriteLine(personNr);
                 DbFunskjoner df = new DbFunskjoner();
-                string  kontoNr = df.hentKontoNr(personNr);
-                //var bæsj = new JavaScriptSerializer();
-                //string bæsj2 = bæsj.Serialize(kontoNr);
-                return kontoNr;
+                string  kontoNr = df.hentKontoNr((string)Session["PersonNr"]); // er det lurt å bruke session her?
+                Debug.WriteLine(kontoNr);
+                return kontoNr; // funksjonsfilen lager json streng, bare å sende videre.
             }
         }
         [HttpPost]
@@ -57,7 +49,7 @@ namespace ObligT1.Controllers
                 DbFunskjoner df = new DbFunskjoner();
                 if (!df.ValiderBruker(innKunde))
                 {
-                    Session["Forsøk"] = true;
+                    Session["Forsøk"] = true; // brukes i LoggInn for å vise "Feil brukernavn eller passord.
                     return RedirectToAction("LoggInn");
                 }
                 else
@@ -67,7 +59,6 @@ namespace ObligT1.Controllers
                     return RedirectToAction("IndexBruker");
                 }              
             }
-            // http://www.binaryintellect.net/articles/218ca630-ba50-48fe-af6e-6f754b5894aa.aspx
             else
             {
                 return RedirectToAction("LoggInn");
@@ -75,8 +66,7 @@ namespace ObligT1.Controllers
         }
         public ActionResult IndexBruker()
         {
-            //Sjekke om session esksisterer for å unngå instance error i neste linje 
-            if (Session["Innlogget"] != null)
+            if (Session["Innlogget"] != null) //Sjekke om session esksisterer for å unngå instance error i neste linje 
             {
                 var innlogget = (bool)Session["Innlogget"] == true;
                 if (innlogget)
@@ -91,8 +81,6 @@ namespace ObligT1.Controllers
         {
             return View();
         }
-
-        // GET: Kundes/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)

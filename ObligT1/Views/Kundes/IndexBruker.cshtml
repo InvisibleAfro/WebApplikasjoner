@@ -3,36 +3,45 @@
     ViewBag.Title = "IndexBruker";
 }
 <head>
-    <script src="~/Scripts/jquery-3.1.1.js"></script>
-    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="/Scripts/jquery-3.1.1.js"></script>
+    <script src="/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script type="text/javascript">
         $(function () {
-            var personNr = $("#persnr").text();
+            alert("On Load Startet");
             $.ajax({
-                url: '/Kundes/HentKontoNr/' + personNr,
-                type: 'GET',
-                data: personNr,
+                url: '/Kundes/HentKontoNr',
+                type: 'post',
                 dataType: 'json',
-                success: function () {
-                    alert("suksesss");
+                success: function (data) {
+                    Kontoliste(data);
+                    alert("Ajax Suksess");
                 },
-                error: function (test) {
-                    alert("Feil. Kontakt systemansvarlig eller prøv igjen senere.");
-
+                error: function (feilmelding) {
+                    alert("Feil. Kontakt systemansvarlig eller prøv igjen senere.\n" + feilmelding.Message);
                     alert(x + '\n' + y + '\n' + z);
                 }
-            });/**
-            function VisKonter(jsKontoNrOgBeløp) {
-                utStreng = "<table>";
-                for (var løpeNr in jsKontoNrOgBeløp) {
-                    utStreng += "<tr><td>" + jsKontoNrOgBeløp[løpeNr] + "</tr><td>" + jsKontoNrOgBeløp[løpeNr] + "</td></tr>";
+            });
+            function Kontoliste(jsKontoListe) {
+                alert("Kontoliste startet");
+                utStreng = "";
+                for (var løpeNr in jsKontoListe) {
+                    utStreng += "<option>" + jsKontoListe[løpeNr].KontoNr + "</option>";
                 }
-                utStreng += "</table>";
-                $("VisKonoter").append(utStreng);
-            }*/
+                $("#KontoSelect").append(utStreng);
+            }
         });
     </script>
-    
 </head>
-<p id="persnr">@Session["PersonNr"]</p>
-<div id="VisKontoer"></div>
+<div id="NyTransaksjon">
+    <h2>Ny Transaksjon</h2>
+    <table>
+        <tr>
+
+        </tr>
+        <tr>
+            <td>
+                <select id="KontoSelect"></select>
+            </td>
+        </tr>
+    </table>
+</div>

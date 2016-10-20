@@ -10,7 +10,7 @@ namespace ObligT1
 {
     public class DbFunskjoner
     {
-        public bool ValiderBruker(KundeModell inn) // kalles etter innloggingsforsøk.
+        public bool ValiderBruker(KundeModell inn) // kalles etter innloggingsforsøk av Valider i kontroller.
         {
             using (var db = new DataConn())
             {
@@ -20,12 +20,10 @@ namespace ObligT1
                     Kunde funnetKunde = db.Kunder.FirstOrDefault(k => k.PassordHash == innHash && k.PersonNr == inn.PersonNr);
                     if(funnetKunde == null)
                     {
-                        Debug.WriteLine("ValiderBruker = Null");
                         return false;
                     }
                     else
                     {
-                        Debug.WriteLine("ValiderBruker = true");
                         return true;
                     }
                 }
@@ -38,21 +36,23 @@ namespace ObligT1
         public string hentKontoNr (string PersonNr){
             using ( var db = new DataConn())
             {
-                IEnumerable<KontoModell> kontoData = from k in db.Kontoer
-                                                      join ku in db.Kunder
-                                                      on k.PersonNr.PersonNr equals ku.PersonNr
-                                                      select new KontoModell
-                                                      {
-                                                            PersonNr = ku.PersonNr.ToString(),
-                                                            Beløp = k.Beløp,
-                                                            KontoNr = k.KontoNr
-                                                       };
-                IEnumerable<KontoDropDown> kontoRetur = from k in db.Kontoer
-                                                        where k.PersonNr.PersonNr == PersonNr
-                                                        select new KontoDropDown { };
-                var serializer = new JavaScriptSerializer();
-                string returData = serializer.Serialize(kontoRetur);
-                return returData;                               
+                try
+                {
+                    IEnumerable<KontoDropDown> kontoRetur = from k in db.Kontoer
+                                                            where k.PersonNr.PersonNr == PersonNr
+                                                            select new KontoDropDown {
+                                                                KontoNr = k.KontoNr
+                                                            };
+                    var serializer = new JavaScriptSerializer();
+                    string returData = serializer.Serialize(kontoRetur);
+                    Debug.WriteLine(returData);
+                    return returData;
+                }
+                catch (Exception error)
+                {
+                    Debug.WriteLine(error.InnerException);
+                    return error.Message.ToString();
+                }                               
             }
         }
         
