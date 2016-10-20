@@ -34,6 +34,20 @@ namespace ObligT1
                 }
             }
         }
+        public List<KontoDropDown> hentKontoNr (string PersonNr){
+            using ( var db = new DataConn())
+            {
+                    List<Konto> kontoRetur = db.Kontoer.Select(k => new Konto()
+                    {
+                        PersonNr = k.PersonNr,
+                        Beløp = k.Beløp,
+                        KontoNr = k.KontoNr
+                    }).ToList();
+                    List<KontoDropDown> listOfY = kontoRetur.Cast<KontoDropDown>().ToList();
+                    return listOfY;                               
+            }
+        }
+        public List<>
         public static bool LagBruker (KundeModell innKunde)
         {
             using (var db = new DataConn())

@@ -7,6 +7,10 @@ using System.Web;
 
 namespace ObligT1.Models
 {
+    public class KontoDropDown
+    {
+        public  string KontoNr;
+    }
     public class KundeModell
     {
         [DisplayName("Person nummer")]

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using ObligT1.Models;
 using System.Diagnostics;
+using System.Web.Script.Serialization;
 
 namespace ObligT1.Controllers
 {
@@ -34,7 +35,16 @@ namespace ObligT1.Controllers
         {
             return View();
         }
-
+        public string HentKontoNr(string personNr)
+        {
+            Debug.WriteLine("HentKontoNr Kalt");
+            Debug.WriteLine(personNr);
+            DbFunskjoner df = new DbFunskjoner();
+            List<KontoDropDown> kontoNr = df.hentKontoNr(personNr);
+            var bæsj = new JavaScriptSerializer();
+            string bæsj2 = bæsj.Serialize(kontoNr);
+            return bæsj2;
+        }
         [HttpPost]
         public ActionResult Valider(KundeModell innKunde)
         {
@@ -43,13 +53,13 @@ namespace ObligT1.Controllers
                 DbFunskjoner df = new DbFunskjoner();
                 if (!df.ValiderBruker(innKunde))
                 {
-                    Session["Innlogget"] = false;
+                    Session["Forsøk"] = true;
                     return RedirectToAction("LoggInn");
                 }
                 else
                 {
-                    //Session("Innlogget") = true;
-                    HttpContext.Session.Add("Innlogget", true);
+                    Session["Innlogget"] = true;
+                    Session["PersonNr"] = innKunde.PersonNr;
                     return RedirectToAction("IndexBruker");
                 }              
             }
@@ -61,10 +71,15 @@ namespace ObligT1.Controllers
         }
         public ActionResult IndexBruker()
         {
-            if (HttpContext.Session["InnLogget"] != null)
+            //Sjekke om session esksisterer for å unngå instance error i neste linje 
+            if (Session["Innlogget"] != null)
             {
-                ViewBag.Innlogget = (bool)Session["InnLogget"];
-                return View();
+                var innlogget = (bool)Session["Innlogget"] == true;
+                if (innlogget)
+                {
+                    return View();
+                }
+                return RedirectToAction("LoggInn");
             }
             return RedirectToAction("LoggInn");
         }

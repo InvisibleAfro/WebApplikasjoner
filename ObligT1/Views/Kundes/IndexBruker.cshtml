@@ -3,31 +3,35 @@
     ViewBag.Title = "IndexBruker";
 }
 <head>
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script type="text/javascript">
         $(function () {
-            //Ajax som lager json av KontoNr og Beløp
+            var data = $("#persnr").text();
             $.ajax({
-                url: '/Kunde/hentAlleNavn',
+                url: '/Kundes/HentKontoNr',
                 type: 'GET',
                 dataType: 'json',
-                success: function (jsKunde) {
-                    VisDropDown(jsKunde);
+                success: function () {
+                    alert("suksesss");
                 },
-                error: function (x, y, z) {
+                error: function (test) {
+                    alert("sdf");
+
                     alert(x + '\n' + y + '\n' + z);
                 }
-            });
-            function VisKonoter(jsKontoNrOgBeløp) {
+            });/**
+            function VisKonter(jsKontoNrOgBeløp) {
                 utStreng = "<table>";
                 for (var løpeNr in jsKontoNrOgBeløp) {
                     utStreng += "<tr><td>" + jsKontoNrOgBeløp[løpeNr] + "</tr><td>" + jsKontoNrOgBeløp[løpeNr] + "</td></tr>";
                 }
                 utStreng += "</table>";
                 $("VisKonoter").append(utStreng);
-            }
+            }*/
         });
     </script>
     
 </head>
-<h2>Velkommen til din netbank.</h2>
+<p id="persnr">@Session["PersonNr"]</p>
 <div id="VisKontoer"></div>
