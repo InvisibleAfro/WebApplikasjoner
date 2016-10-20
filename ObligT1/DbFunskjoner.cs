@@ -50,9 +50,9 @@ namespace ObligT1
                 IEnumerable<KontoDropDown> kontoRetur = from k in db.Kontoer
                                                         where k.PersonNr.PersonNr == PersonNr
                                                         select new KontoDropDown { };
-                var bæsj = new JavaScriptSerializer();
-                string bæsj2 = bæsj.Serialize(kontoRetur);
-                return bæsj2;                               
+                var serializer = new JavaScriptSerializer();
+                string returData = serializer.Serialize(kontoRetur);
+                return returData;                               
             }
         }
         

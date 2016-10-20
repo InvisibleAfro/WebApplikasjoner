@@ -7,10 +7,11 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script type="text/javascript">
         $(function () {
-            var data = $("#persnr").text();
+            var personNr = $("#persnr").text();
             $.ajax({
-                url: '/Kundes/HentKontoNr',
+                url: '/Kundes/HentKontoNr/' + personNr,
                 type: 'GET',
+                data: personNr,
                 dataType: 'json',
                 success: function () {
                     alert("suksesss");

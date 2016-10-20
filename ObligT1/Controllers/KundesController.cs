@@ -35,11 +35,12 @@ namespace ObligT1.Controllers
         {
             return View();
         }
+        [HttpGet]
         public string HentKontoNr(string personNr)
         {
             using (var db = new DataConn())
             {
-                Debug.WriteLine("HentKontoNr Kalt");
+                Debug.WriteLine("HentKontoNr Kalt. PersonNr er " + personNr);
                 Debug.WriteLine(personNr);
                 DbFunskjoner df = new DbFunskjoner();
                 string  kontoNr = df.hentKontoNr(personNr);
