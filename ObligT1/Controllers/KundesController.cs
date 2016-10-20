@@ -37,13 +37,16 @@ namespace ObligT1.Controllers
         }
         public string HentKontoNr(string personNr)
         {
-            Debug.WriteLine("HentKontoNr Kalt");
-            Debug.WriteLine(personNr);
-            DbFunskjoner df = new DbFunskjoner();
-            List<KontoDropDown> kontoNr = df.hentKontoNr(personNr);
-            var bæsj = new JavaScriptSerializer();
-            string bæsj2 = bæsj.Serialize(kontoNr);
-            return bæsj2;
+            using (var db = new DataConn())
+            {
+                Debug.WriteLine("HentKontoNr Kalt");
+                Debug.WriteLine(personNr);
+                DbFunskjoner df = new DbFunskjoner();
+                string  kontoNr = df.hentKontoNr(personNr);
+                //var bæsj = new JavaScriptSerializer();
+                //string bæsj2 = bæsj.Serialize(kontoNr);
+                return kontoNr;
+            }
         }
         [HttpPost]
         public ActionResult Valider(KundeModell innKunde)

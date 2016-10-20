@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using ObligT1.Models;
 using System.Diagnostics;
+using System.Web.Script.Serialization;
 
 namespace ObligT1
 {
@@ -34,20 +35,27 @@ namespace ObligT1
                 }
             }
         }
-        public List<KontoDropDown> hentKontoNr (string PersonNr){
+        public string hentKontoNr (string PersonNr){
             using ( var db = new DataConn())
             {
-                    List<Konto> kontoRetur = db.Kontoer.Select(k => new Konto()
-                    {
-                        PersonNr = k.PersonNr,
-                        Beløp = k.Beløp,
-                        KontoNr = k.KontoNr
-                    }).ToList();
-                    List<KontoDropDown> listOfY = kontoRetur.Cast<KontoDropDown>().ToList();
-                    return listOfY;                               
+                IEnumerable<KontoModell> kontoData = from k in db.Kontoer
+                                                      join ku in db.Kunder
+                                                      on k.PersonNr.PersonNr equals ku.PersonNr
+                                                      select new KontoModell
+                                                      {
+                                                            PersonNr = ku.PersonNr.ToString(),
+                                                            Beløp = k.Beløp,
+                                                            KontoNr = k.KontoNr
+                                                       };
+                IEnumerable<KontoDropDown> kontoRetur = from k in db.Kontoer
+                                                        where k.PersonNr.PersonNr == PersonNr
+                                                        select new KontoDropDown { };
+                var bæsj = new JavaScriptSerializer();
+                string bæsj2 = bæsj.Serialize(kontoRetur);
+                return bæsj2;                               
             }
         }
-        public List<>
+        
         public static bool LagBruker (KundeModell innKunde)
         {
             using (var db = new DataConn())

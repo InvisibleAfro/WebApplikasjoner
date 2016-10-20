@@ -11,6 +11,13 @@ namespace ObligT1.Models
     {
         public  string KontoNr;
     }
+    public class KontoModell
+    {
+        public string KontoNr { get; set; }
+        public string PersonNr { get; set; }
+        public decimal Beløp { get; set; }
+
+    }
     public class KundeModell
     {
         [DisplayName("Person nummer")]
