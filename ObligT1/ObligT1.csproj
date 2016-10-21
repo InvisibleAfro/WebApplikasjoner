@@ -164,6 +164,7 @@
     <Content Include="Views\Kundes\LagBruker.cshtml" />
     <Content Include="Views\Kundes\DetteFunker.cshtml" />
     <Content Include="Views\Kundes\IndexBruker.cshtml" />
+    <Content Include="Views\Kundes\NyTransaksjon.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

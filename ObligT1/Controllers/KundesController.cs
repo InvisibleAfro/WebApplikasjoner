@@ -42,6 +42,15 @@ namespace ObligT1.Controllers
             }
         }
         [HttpPost]
+        public ActionResult ValiderNyTransaksjon (NyTransaksjon inn)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("IndexBruker");
+            }
+            return RedirectToAction("IndexBruker");
+        }
+        [HttpPost]
         public ActionResult Valider(KundeModell innKunde)
         {
             if (ModelState.IsValid)

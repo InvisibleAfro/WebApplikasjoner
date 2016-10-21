@@ -18,6 +18,18 @@ namespace ObligT1.Models
         public decimal Beløp { get; set; }
 
     }
+    public class NyTransaksjon
+    {
+        [Required(ErrorMessage = "Kontonummer må oppgis")]
+        [RegularExpression(@"[0-9]{10}", ErrorMessage = "Ugyldig kontnummer nummer.")]
+        public string TilKonto;
+        [Required(ErrorMessage = "Beløp må oppgis")]
+        [RegularExpression(@"[0-9]+.[0-9]{2}", ErrorMessage = "Ugyldig beløp.")]
+        public decimal Belop;
+        [Required(ErrorMessage = "Forfallsdato må oppgis")]
+        [RegularExpression(@"[0-9.-]+", ErrorMessage = "Ugylidg dato.")]
+        public string Forfallsdato;
+    }
     public class KundeModell
     {
         [DisplayName("Person nummer")]
