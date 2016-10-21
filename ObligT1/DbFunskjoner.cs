@@ -55,7 +55,23 @@ namespace ObligT1
                 }                               
             }
         }
-        
+        public string HentKontoOversikt (string PersonNr)
+        {
+            using ( var db = new DataConn()){
+                IEnumerable<KontoListe> kontoOversikt = from k in db.Kontoer
+                                                     join ku in db.Kunder
+                                                     on k.PersonNr.PersonNr equals ku.PersonNr
+                                                     select new KontoListe
+                                                     {
+                                                         Saldo = k.Beløp,
+                                                         KontoNr = k.KontoNr
+                                                     };
+                var serializer = new JavaScriptSerializer();
+                string returData = serializer.Serialize(kontoOversikt);
+                Debug.WriteLine(returData);
+                return returData;
+            }
+        }
         public static bool LagBruker (KundeModell innKunde)
         {
             using (var db = new DataConn())

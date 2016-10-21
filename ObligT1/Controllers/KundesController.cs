@@ -19,12 +19,17 @@ namespace ObligT1.Controllers
         {
             return View();
         }
+        public string KontoOversikt()
+        {
+                DbFunskjoner df = new DbFunskjoner();
+                return df.HentKontoOversikt((string)Session["PersonNr"]);
+        }
         [HttpPost]
         public ActionResult LagBruker(KundeModell innKunde)
         {
             if (DbFunskjoner.LagBruker(innKunde))
             {
-                return RedirectToAction("DetteFunker");
+                return View();
             }
             else
             {
@@ -33,23 +38,22 @@ namespace ObligT1.Controllers
         }
         public string HentKontoNr()
         {
-            using (var db = new DataConn())
-            {
                 DbFunskjoner df = new DbFunskjoner();
                 string  kontoNr = df.hentKontoNr((string)Session["PersonNr"]); // er det lurt å bruke session her?
                 Debug.WriteLine(kontoNr);
                 return kontoNr; // funksjonsfilen lager json streng, bare å sende videre.
-            }
         }
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult ValiderNyTransaksjon (NyTransaksjon inn)
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("IndexBruker");
+                return RedirectToAction("LoggInn");
             }
             return RedirectToAction("IndexBruker");
         }
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Valider(KundeModell innKunde)
         {
@@ -103,16 +107,10 @@ namespace ObligT1.Controllers
             }
             return View(kunde);
         }
-
-        // GET: Kundes/Create
         public ActionResult Create()
         {
             return View();
         }
-
-        // POST: Kundes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PersonNr,Fornavn,Etternavn,Passord")] Kunde kunde)
@@ -126,8 +124,6 @@ namespace ObligT1.Controllers
 
             return View(kunde);
         }
-
-        // GET: Kundes/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)

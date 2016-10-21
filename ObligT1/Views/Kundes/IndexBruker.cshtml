@@ -7,13 +7,25 @@
     <script src="/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script type="text/javascript">
         $(function () {
-            alert("On Load Startet");
-            $.ajax({
-                url: '/Kundes/HentKontoNr',
+            $.ajax({ // henter data til KontoNr listen i ny transaksjon tabellen.
+                url: '@Url.Action("HentKontoNr", "Kundes")',
                 type: 'post',
                 dataType: 'json',
                 success: function (data) {
                     Kontoliste(data);
+                    //alert("Ajax Suksess");
+                },
+                error: function (feilmelding) {
+                    alert("Feil. Kontakt systemansvarlig eller prøv igjen senere.\n" + feilmelding.Message);
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+            $.ajax({ // Henter data til oversikt tabellen.
+                url: '@Url.Action("KontoOversikt", "Kundes")',
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    VisKontOversikt(data);
                     alert("Ajax Suksess");
                 },
                 error: function (feilmelding) {
@@ -21,8 +33,17 @@
                     alert(x + '\n' + y + '\n' + z);
                 }
             });
+            //bygger nettsiden.
+            function VisKontOversikt(jsKontoOversikt) { // Her er JEG!!
+                alert("Oversikt startet");
+                utStreng = "<table class='table'";
+                for (var løpeNr in jsKontoOversikt) {
+                    utStreng += "<option>" + jsKontoOversikt[løpeNr].KontoNr + "</option>";
+                }
+                $("#KontoSelect").append(utStreng);
+            }
             function Kontoliste(jsKontoListe) {
-                alert("Kontoliste startet");
+                //alert("Kontoliste startet");
                 utStreng = "";
                 for (var løpeNr in jsKontoListe) {
                     utStreng += "<option>" + jsKontoListe[løpeNr].KontoNr + "</option>";
@@ -32,4 +53,6 @@
         });
     </script>
 </head>
+<div id="persnr" data-persnr="@Session["PersonNr"]"></div>
+@Html.Partial("KontoSammendrag")
 @Html.Partial("NyTransaksjon")
