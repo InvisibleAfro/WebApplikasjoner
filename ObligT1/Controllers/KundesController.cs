@@ -43,6 +43,11 @@ namespace ObligT1.Controllers
                 Debug.WriteLine(kontoNr);
                 return kontoNr; // funksjonsfilen lager json streng, bare å sende videre.
         }
+        public string HentTransaksjoner (string KontoNr)
+        {
+            DbFunskjoner df = new DbFunskjoner();
+            return df.ReturnerTransaskjoner(KontoNr);
+        }
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult ValiderNyTransaksjon (NyTransaksjon inn)

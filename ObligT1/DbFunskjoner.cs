@@ -51,25 +51,58 @@ namespace ObligT1
                 catch (Exception error)
                 {
                     Debug.WriteLine(error.InnerException);
-                    return error.Message.ToString();
+                    return "Feil.";
                 }                               
             }
         }
-        public string HentKontoOversikt (string PersonNr)
+        public string ReturnerTransaskjoner (string kontoNr)
         {
-            using ( var db = new DataConn()){
-                IEnumerable<KontoOversikt> kontoOversikt = from k in db.Kontoer
-                                                     join ku in db.Kunder
-                                                     on k.PersonNr.PersonNr equals ku.PersonNr
-                                                     select new KontoOversikt
-                                                     {
-                                                         Saldo = k.Beløp,
-                                                         KontoNr = k.KontoNr
-                                                     };
-                var serializer = new JavaScriptSerializer();
-                string returKontoOversikt = serializer.Serialize(kontoOversikt);
-                Debug.WriteLine(returKontoOversikt);
-                return returKontoOversikt;
+            using (var db = new DataConn())
+            {
+                try
+                {
+                    IEnumerable<NyTransaksjon> data = from t in db.Transaksjoner // Trenger ikke lange ny modell.
+                                                      where t.KontoFra == kontoNr
+                                                      select new NyTransaksjon
+                                                      {
+                                                          TilKonto = t.KontoTil,
+                                                          Belop = t.beløp,
+                                                          Forfallsdato = t.Dato
+                                                      };
+                    var serializer = new JavaScriptSerializer();
+                    string returData = serializer.Serialize(data);
+                    Debug.WriteLine(returData);
+                    return returData;
+                }
+                catch
+                {
+                    return "Feil.";
+                }
+            }
+        }
+        public string HentKontoOversikt(string PersonNr)
+        {
+            var serializer = new JavaScriptSerializer();
+            using (var db = new DataConn())
+            {
+                try
+                {
+                    IEnumerable<KontoOversikt> kontoOversikt = from k in db.Kontoer
+                                                               join ku in db.Kunder
+                                                               on k.PersonNr.PersonNr equals ku.PersonNr
+                                                               select new KontoOversikt
+                                                               {
+                                                                   Saldo = k.Beløp,
+                                                                   KontoNr = k.KontoNr
+                                                               };
+                    string returKontoOversikt = serializer.Serialize(kontoOversikt);
+                    Debug.WriteLine(returKontoOversikt);
+                    return returKontoOversikt;
+                }
+                catch
+                {
+                    return "Feil";
+                }
             }
         }
         public static bool LagBruker (KundeModell innKunde)

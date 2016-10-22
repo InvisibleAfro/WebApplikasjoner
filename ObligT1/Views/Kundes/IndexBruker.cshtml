@@ -3,8 +3,6 @@
     ViewBag.Title = "IndexBruker";
 }
 <head>
-    <script src="/Scripts/jquery-3.1.1.js"></script>
-    <script src="/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script type="text/javascript">
         $(function () {
             $.ajax({ // henter data til KontoNr listen i ny transaksjon tabellen.
@@ -16,7 +14,7 @@
                     //alert("Ajax Suksess");
                 },
                 error: function (feilmelding) {
-                    alert("Feil. Kontakt systemansvarlig eller prøv igjen senere.\n" + feilmelding.Message);
+                    alert("Feil. Kontakt systemansvarlig eller prøv igjen senere.");
                     alert(x + '\n' + y + '\n' + z);
                 }
             });
@@ -26,10 +24,9 @@
                 dataType: 'json',
                 success: function (data) {
                     VisKontOversikt(data);
-                    alert("Ajax Suksess");
                 },
                 error: function (feilmelding) {
-                    alert("Feil. Kontakt systemansvarlig eller prøv igjen senere.\n" + feilmelding.Message);
+                    alert("Feil. Kontakt systemansvarlig eller prøv igjen senere.");
                     alert(x + '\n' + y + '\n' + z);
                 }
             });
@@ -37,7 +34,11 @@
             function VisKontOversikt(jsKontoOversikt) {
                 utStreng = "";
                 for (var løpeNr in jsKontoOversikt) {
-                    utStreng += "<table class='table' id='" + jsKontoOversikt[løpeNr].KontoNr + "'><thead class='thead-inverse'><tr><td>KontoNr: " + jsKontoOversikt[løpeNr].KontoNr + "</td><td> Saldo: " + jsKontoOversikt[løpeNr].Saldo + " ,-</td></tr></thead></table>";
+                    utStreng += "<table class='table table-inverse' id='" + jsKontoOversikt[løpeNr].KontoNr + " 'onclick='VisDetaljer(this.id)'>";
+                        utStreng += "<thead style='background-color:AliceBlue'><tr><th><span class=' glyphicon glyphicon-triangle-bottom' aria-hidden='true'></span></th>";
+                            utStreng += "<th><strong>KontoNr:</strong> " + jsKontoOversikt[løpeNr].KontoNr + "</th><th><strong> Saldo:</strong> " + jsKontoOversikt[løpeNr].Saldo + " ,-</th></tr>"
+                                utStreng += "</thead></table>";
+                                utStreng += "<div id='KontoDetaljer" + jsKontoOversikt[løpeNr].KontoNr + "'></div>";
                 }
                 $("#KontoOversikt").append(utStreng);
 
@@ -49,12 +50,40 @@
                 }
                 $("#KontoSelect").append(utStreng);
             }
-        });
+        }); // Document ready slutt.
+        function VisDetaljer(id) { // onclick på  oversikt tabellen kaller denne.
+            if ($("#KontoDetaljer" + id).is(":empty")) {
+                $.ajax({ // Henter data til oversikt tabellen.
+                    url: '@Url.Action("HentTransaksjoner", "Kundes")',
+                    data: { KontoNr: id },
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (jsTrans) {
+                        VisTransaksjoner(id, jsTrans);
+                    },
+                    error: function (feilmelding) {
+                        alert("Feil. Kontakt systemansvarlig eller prøv igjen senere.");
+                        alert(x + '\n' + y + '\n' + z);
+                    }
+                });
+            }
+        };
+        function VisTransaksjoner(id, jsTrans) {
+            utStreng = "<table class='table table-striped table-bordered table-condensed table-hover'>";
+            utStreng += "<thead><th>Til Konto:</th><th>Beløp</th><th>Dato</th></thead>";
+            for (var i in jsTrans){
+                utStreng += "<tr><td>" + jsTrans[i].TilKonto + "</td><td>" + jsTrans[i].Belop + " ,-</td><td>" + jsTrans[i].Forfallsdato + "</td></tr>";
+            }
+            utStreng += "</tbody></table>";
+            $("#KontoDetaljer" + id).append(utStreng);
+        }
     </script>
 </head>
 <div id="persnr" data-persnr="@Session["PersonNr"]"></div>
-<div id="KontoOversikt" class="container">
-    <h2>Dine Kontoer</h2>
-    <!--VisKontoOversikt-->
+<div class="conatiner">
+    <div id="KontoOversikt">
+        <h2>Dine Kontoer</h2>
+        <!--VisKontoOversikt-->
+    </div>
+    @Html.Partial("NyTransaksjon")
 </div>
-@Html.Partial("NyTransaksjon")
