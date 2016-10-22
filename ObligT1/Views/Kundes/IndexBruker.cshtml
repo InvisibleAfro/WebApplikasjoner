@@ -34,17 +34,15 @@
                 }
             });
             //Disse bygger nettsiden.
-            function VisKontOversikt(jsKontoOversikt) { // Her er JEG!!
-                alert("Oversikt startet");
+            function VisKontOversikt(jsKontoOversikt) {
                 utStreng = "";
                 for (var løpeNr in jsKontoOversikt) {
-                    utStreng += "<tr><td>" + jsKontoOversikt[løpeNr].KontoNr + "</td><td>" + jsKontoOversikt[løpeNr].Saldo + "</td></tr>";
+                    utStreng += "<table class='table' id='" + jsKontoOversikt[løpeNr].KontoNr + "'><thead class='thead-inverse'><tr><td>KontoNr: " + jsKontoOversikt[løpeNr].KontoNr + "</td><td> Saldo: " + jsKontoOversikt[løpeNr].Saldo + " ,-</td></tr></thead></table>";
                 }
                 $("#KontoOversikt").append(utStreng);
 
             }
             function Kontoliste(jsKontoListe) {
-                //alert("Kontoliste startet");
                 utStreng = "";
                 for (var løpeNr in jsKontoListe) {
                     utStreng += "<option>" + jsKontoListe[løpeNr].KontoNr + "</option>";
@@ -55,7 +53,8 @@
     </script>
 </head>
 <div id="persnr" data-persnr="@Session["PersonNr"]"></div>
-<table class="table" id="KontoOversikt">
+<div id="KontoOversikt" class="container">
+    <h2>Dine Kontoer</h2>
     <!--VisKontoOversikt-->
-</table>
+</div>
 @Html.Partial("NyTransaksjon")

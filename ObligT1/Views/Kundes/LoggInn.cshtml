@@ -2,43 +2,48 @@
 @{
     ViewBag.Title = "LoggInn";
 }
-
-<h2>Logg Inn</h2>
 @using (Html.BeginForm("Valider", "Kundes"))
 {
     @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <p>Text</p>
+            </div>
+            <div class="col-md-8">
+            <div class="form-horizontal">
+                <h3>Nettbank</h3><hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PersonNr, htmlAttributes: new { @class = "col-md-3" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.PersonNr, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PersonNr, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.PersonNr, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PersonNr, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PersonNr, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Passord, htmlAttributes: new { @class = "col-md-3" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.Passord, new { htmlAttributes = new { @class = "form-control" } })
+                        <div class="col-md-8">
+                            @Html.ValidationMessageFor(model => model.Passord, "", new { @class = "text-danger" })
+                            @if (Session["Forsøk"] != null)
+                            {
+                                var forsøk = (bool)Session["Forsøk"];
+                                if (forsøk == true)
+                                {
+                                    <p style="color:red">Feil brukernavn eller passord.</p>
+                                }
+                            }
+                        </div>
+                    </div>
+
+                </div>
+                <input type="submit" value="Login" class="btn btn-default" />
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Passord, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Passord, new { htmlAttributes = new { @class = "form-control" } })
-                <div class="col-md-10">
-                        @Html.ValidationMessageFor(model => model.Passord, "", new { @class = "text-danger" })
-                        @if (Session["Forsøk"] != null)
-                        {
-                            var forsøk = (bool)Session["Forsøk"];
-                            if (forsøk == true)
-                            {
-                            <p style="color:red">Feil brukernavn eller passord.</p>
-                            }
-                        }
-                        </div>
-                </div>
-            
-        </div>
-        <input type="submit" value="Login" class="btn btn-default" />
-        <input type="button" value="Login" class="btn btn-default" disabled="disabled"/>
-        </div>  
+      </div>
+    </div>
         @Html.ActionLink("Lag ny bruker", "LagBruker");
 }
