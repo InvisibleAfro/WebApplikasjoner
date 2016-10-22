@@ -24,20 +24,17 @@
         </thead>
         <tr>
             <td>
-                <select id="KontoSelect"></select>
+                <select id="KontoSelect" class="form-control"></select>
             </td>
             <td>
-                <input type="text" name="Belop" />
                 @Html.EditorFor(model => model.Belop, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Belop, "", new { @class = "text-danger" })
             </td>
             <td>
-                <input type="text" name="TilKonto" />
                 @Html.EditorFor(model => model.TilKonto, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TilKonto, "", new { @class = "text-danger" })
             </td>
             <td>
-                <input type="text" name="Forfallsdato" />
                 @Html.EditorFor(model => model.Forfallsdato, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Forfallsdato, "", new { @class = "text-danger" })
             </td>

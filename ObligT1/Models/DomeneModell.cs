@@ -21,7 +21,7 @@ namespace ObligT1.Models
     public class NyTransaksjon
     {
         [Required(ErrorMessage = "Kontonummer må oppgis")]
-        [RegularExpression(@"[0-9]{10}", ErrorMessage = "Ugyldig kontnummer nummer.")]
+        [RegularExpression(@"[0-9]{10}", ErrorMessage = "Ugyldig kontonummer nummer.")]
         public string TilKonto;
         [Required(ErrorMessage = "Beløp må oppgis")]
         [RegularExpression(@"[0-9]+.[0-9]{2}", ErrorMessage = "Ugyldig beløp.")]
@@ -46,7 +46,7 @@ namespace ObligT1.Models
     {
         public string personNr;
     }
-    public class KontoListe
+    public class KontoOversikt
     {
         public string KontoNr;
         public decimal Saldo;

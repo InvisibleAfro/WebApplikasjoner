@@ -29,7 +29,7 @@ namespace ObligT1.Controllers
         {
             if (DbFunskjoner.LagBruker(innKunde))
             {
-                return View();
+                return RedirectToAction("LoggInn");
             }
             else
             {
@@ -39,7 +39,7 @@ namespace ObligT1.Controllers
         public string HentKontoNr()
         {
                 DbFunskjoner df = new DbFunskjoner();
-                string  kontoNr = df.hentKontoNr((string)Session["PersonNr"]); // er det lurt å bruke session her?
+                string  kontoNr = df.hentKontoNr((string)Session["PersonNr"]);
                 Debug.WriteLine(kontoNr);
                 return kontoNr; // funksjonsfilen lager json streng, bare å sende videre.
         }
