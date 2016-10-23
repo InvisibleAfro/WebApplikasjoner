@@ -50,13 +50,22 @@ namespace ObligT1.Controllers
         }
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult ValiderNyTransaksjon (NyTransaksjon inn)
+        public ActionResult ValiderNyTransaksjon(RegistrerKommendeUtbetaling innTransaksjon)
         {
-            if (ModelState.IsValid)
+            if (TryValidateModel(innTransaksjon)) // Hvorfor fungerer ingen av disse?? :(
             {
-                return RedirectToAction("LoggInn");
+                return RedirectToAction("IndexBruker");
+
+            }
+            if (ModelState.IsValid) // Hvorfor fungerer ingen av disse?? :(
+            {
+                return RedirectToAction("IndexBruker");
             }
             return RedirectToAction("IndexBruker");
+        }
+        public ActionResult DetteFunker()
+        {
+            return View();
         }
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -72,15 +81,36 @@ namespace ObligT1.Controllers
                 }
                 else
                 {
-                    Session["Innlogget"] = true;
+                    Session["RiktigPassord"] = true;
                     Session["PersonNr"] = innKunde.PersonNr;
-                    return RedirectToAction("IndexBruker");
+                    return RedirectToAction("EnGangsKode");
                 }              
             }
             else
             {
                 return RedirectToAction("LoggInn");
             }
+        }
+        public ActionResult EnGangsKode()
+        {   if (Session["RiktigPassord"] != null && (bool)Session["RiktigPassord"] == true)
+            {
+                return View();
+            }
+            return RedirectToAction("LoggInn");
+        }
+        [HttpPost]
+        public ActionResult EnGangsKode(EnGangsKode inn)
+        {
+            if (ModelState.IsValid && Session["RiktigPassord"] !=null && (bool)Session["RiktigPassord"]==true)
+            {
+                Session["Innlogget"] = true;
+                return RedirectToAction("IndexBruker");
+            }
+            /*** else if ( sjekke om koden som ble oppgitt ikke stemmer){
+             *  Session["FeilKode"] == true; // bruker denne for å vise at koden var feil.
+                return View();
+                ***/
+            return View();
         }
         public ActionResult IndexBruker()
         {

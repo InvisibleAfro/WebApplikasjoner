@@ -162,6 +162,8 @@
     <Content Include="Views\Kundes\IndexBruker.cshtml" />
     <Content Include="Views\Kundes\NyTransaksjon.cshtml" />
     <Content Include="Views\Kundes\KontoSammendrag.cshtml" />
+    <Content Include="Views\Kundes\EnGangsKode.cshtml" />
+    <Content Include="Views\Kundes\BekreftTransaksjon.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

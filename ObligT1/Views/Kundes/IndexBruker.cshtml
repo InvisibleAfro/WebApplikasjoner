@@ -34,7 +34,7 @@
             function VisKontOversikt(jsKontoOversikt) {
                 utStreng = "";
                 for (var løpeNr in jsKontoOversikt) {
-                    utStreng += "<table class='table table-inverse' id='" + jsKontoOversikt[løpeNr].KontoNr + " 'onclick='VisDetaljer(this.id)'>";
+                    utStreng += "<table class='table table-hover' id='" + jsKontoOversikt[løpeNr].KontoNr + "' onclick='VisDetaljer(this.id)'>";
                         utStreng += "<thead style='background-color:AliceBlue'><tr><th><span class=' glyphicon glyphicon-triangle-bottom' aria-hidden='true'></span></th>";
                             utStreng += "<th><strong>KontoNr:</strong> " + jsKontoOversikt[løpeNr].KontoNr + "</th><th><strong> Saldo:</strong> " + jsKontoOversikt[løpeNr].Saldo + " ,-</th></tr>"
                                 utStreng += "</thead></table>";
@@ -80,7 +80,7 @@
     </script>
 </head>
 <div id="persnr" data-persnr="@Session["PersonNr"]"></div>
-<div class="conatiner">
+<div class="container">
     <div id="KontoOversikt">
         <h2>Dine Kontoer</h2>
         <!--VisKontoOversikt-->

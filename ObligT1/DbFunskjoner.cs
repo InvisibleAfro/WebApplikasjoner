@@ -61,9 +61,9 @@ namespace ObligT1
             {
                 try
                 {
-                    IEnumerable<NyTransaksjon> data = from t in db.Transaksjoner // Trenger ikke lange ny modell.
+                    IEnumerable<Transaksjoner> data = from t in db.Transaksjoner
                                                       where t.KontoFra == kontoNr
-                                                      select new NyTransaksjon
+                                                      select new Transaksjoner
                                                       {
                                                           TilKonto = t.KontoTil,
                                                           Belop = t.beløp,
