@@ -46,7 +46,7 @@ namespace ObligT1.Models
         public DataConn()
             : base("name=Database")
         {
-            Database.SetInitializer(new DropCreateDatabaseAlways<DataConn>());
+            //Database.SetInitializer(new DropCreateDatabaseAlways<DataConn>());
             Database.CreateIfNotExists();
         }
         public DbSet<Konto> Kontoer { get; set; }

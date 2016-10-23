@@ -70,7 +70,7 @@
         };
         function VisTransaksjoner(id, jsTrans) {
             utStreng = "<table class='table table-striped table-bordered table-condensed table-hover'>";
-            utStreng += "<thead><th>Til Konto:</th><th>Beløp</th><th>Dato</th></thead>";
+            utStreng += "<thead><th>Til Konto:</th><th>Beløp</th><th>Dato</th></thead><tbody>";
             for (var i in jsTrans){
                 utStreng += "<tr><td>" + jsTrans[i].TilKonto + "</td><td>" + jsTrans[i].Belop + " ,-</td><td>" + jsTrans[i].Forfallsdato + "</td></tr>";
             }
@@ -84,6 +84,7 @@
     <div id="KontoOversikt">
         <h2>Dine Kontoer</h2>
         <!--VisKontoOversikt-->
-    </div>
-    @Html.Partial("NyTransaksjon")
+    </div>    
+    @Html.Partial("test21")
+    @Html.Partial("KommendeUtbetalinger")
 </div>

@@ -25,7 +25,20 @@ namespace ObligT1.Models
         public decimal Belop;
         public string Forfallsdato;
     }
-    public class RegistrerKommendeUtbetaling
+    public class KommendeUtbetaling
+    {
+        public string FraKonto;
+        [Required(ErrorMessage = "Kontonummer må oppgis")]
+        [RegularExpression(@"[0-9]{10}", ErrorMessage = "Ugyldig kontonummer.")]
+        public string TilKonto;
+        [Required(ErrorMessage = "Beløp må oppgis")]
+        [RegularExpression(@"[0-9]+}", ErrorMessage = "Ugyldig beløp.")]
+        public decimal Belop;
+        [Required(ErrorMessage = "Forfallsdato må oppgis")]
+        [RegularExpression(@"[0-9.-]+", ErrorMessage = "Ugylidg dato.")]
+        public string Forfallsdato;
+    }
+    public class NyTransaksjon
     {
         public string FraKonto;
         [Required(ErrorMessage = "Kontonummer må oppgis")]

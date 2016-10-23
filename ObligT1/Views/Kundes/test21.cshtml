@@ -1,5 +1,5 @@
-﻿@model ObligT1.Models.RegistrerKommendeUtbetaling
-@using (Html.BeginForm("RegisterKommendeUtbetaling", "Kundes", new { id = "NyTransaksjon" } ))
+﻿@model ObligT1.Models.NyTransaksjon
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -48,7 +48,7 @@
                     @Html.ValidationMessageFor(model => model.Forfallsdato, "", new { @class = "text-danger" })
                 </td>
                 <td>
-                    <input type="submit" a href="#BekreftTransaksjon" class="btn btn-default" id="sletteKnapp" value ="Neste"/>
+                    <input type="submit" a href="#BekreftTransaksjon" class="btn btn-default" id="sletteKnapp" value="Neste" />
                 </td>
             </tr>
         </table>

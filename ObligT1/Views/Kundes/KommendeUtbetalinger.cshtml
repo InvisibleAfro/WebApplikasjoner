@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ObligT1.Models.KommendeUtbetaling>
+@{
+    ViewBag.Title = "KommendeUtbetalinger";
+}
+
+<h2>Kommende Utbetalinger</h2>
+<table class="table table-hovered">
+    <thead>
+        <tr>
+            <th>
+                Fra Konto:
+            </th>
+            <th>
+                Til Konto:
+            </th>
+            <th>
+                Beløp:
+            </th>
+            <th>
+                Forfallsdato:
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FraKonto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TilKonto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Belop)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Forfallsdato)
+            </td>
+            <td></td>
+        </tr>
+    }
+</table>

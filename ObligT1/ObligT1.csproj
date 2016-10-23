@@ -156,14 +156,13 @@
     <Content Include="Views\Kundes\Edit.cshtml" />
     <Content Include="Views\Kundes\Index.cshtml" />
     <Content Include="Views\Kundes\LoggInn.cshtml" />
-    <Content Include="Views\Kundes\Valider.cshtml" />
     <Content Include="Views\Kundes\LagBruker.cshtml" />
     <Content Include="Views\Kundes\DetteFunker.cshtml" />
     <Content Include="Views\Kundes\IndexBruker.cshtml" />
-    <Content Include="Views\Kundes\NyTransaksjon.cshtml" />
-    <Content Include="Views\Kundes\KontoSammendrag.cshtml" />
     <Content Include="Views\Kundes\EnGangsKode.cshtml" />
     <Content Include="Views\Kundes\BekreftTransaksjon.cshtml" />
+    <Content Include="Views\Kundes\KommendeUtbetalinger.cshtml" />
+    <Content Include="Views\Kundes\test21.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

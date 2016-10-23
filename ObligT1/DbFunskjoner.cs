@@ -105,6 +105,22 @@ namespace ObligT1
                 }
             }
         }
+        public IEnumerable<KommendeUtbetaling> HentKommendeUtbetalinger (string PersonNr)
+        {
+            var db = new DataConn();
+                    IEnumerable<KommendeUtbetaling> returData = from k in db.KommendeTransaksjoner
+                                                                join a in db.Kontoer
+                                                            on k.KontoFra equals a.KontoNr
+                                                            where a.PersonNr.PersonNr == PersonNr
+                                                            select new KommendeUtbetaling
+                                                            {
+                                                                FraKonto = k.KontoFra,
+                                                                TilKonto = k.KontoTil,
+                                                                Belop = k.beløp,
+                                                                Forfallsdato = k.Dato
+                                                            };
+                    return returData;
+        } 
         public static bool LagBruker (KundeModell innKunde)
         {
             using (var db = new DataConn())
